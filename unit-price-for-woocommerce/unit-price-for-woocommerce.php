@@ -4,7 +4,7 @@
  * Plugin Name: Unit Price for WooCommerce
  * Plugin URI: https://en.condless.com/unit-price-for-woocommerce/
  * Description: WooCommerce plugin for configuring products which are sold by units but priced by weight.
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: Condless
  * Author URI: https://en.condless.com/
  * Developer: Condless
@@ -15,10 +15,10 @@
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Requires at least: 5.2
- * Tested up to: 6.5
+ * Tested up to: 6.7
  * Requires PHP: 7.0
  * WC requires at least: 3.4
- * WC tested up to: 8.9
+ * WC tested up to: 9.4
  */
 
 /**
@@ -773,7 +773,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * @param mixed $item
 		 */
 		public function wc_add_value_on_order_item_view( $product, $item ) {
-			if ( $item->is_type( 'line_item' ) && apply_filters( 'upw_admin_order_unit_headers_enbaled', true ) && ! wp_doing_ajax() ) {
+			if ( $product && $item->is_type( 'line_item' ) && apply_filters( 'upw_admin_order_unit_headers_enbaled', true ) && ! wp_doing_ajax() ) {
 				global $theorder;
 				if ( $theorder && $theorder->get_meta( '_has_unit_items' ) ) {
 					$unit_size = 'mpc' === $item->get_meta( '_upw_measurement' ) ? '' : $item->get_meta( '_unit_size' );
@@ -1530,7 +1530,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 				jQuery( function( $ ) {
 					$( '.variations_form' ).each( function() {
 						$( this ).on( 'show_variation', function( event, variation ) {
-							$( 'input[name=quantity]' ).change( function() {
+							$( 'input[name=quantity]' ).change( function() { /* This event won't be triggered on the first selection of variation so calculation won't work, can add upw_simple_subtotal_enabled hook for variation as temporary solution */
 								if ( $( this ).val() > 0 ) {
 									<?php echo $base_selector; ?>.find( '#product_total_price' ).css( 'visibility', 'visible' );
 									<?php echo $base_selector; ?>.find( '#product_total_price .price' ).html( '<?php echo $price_prefix; ?>' + parseFloat( variation.display_price * $( this ).val() ).toFixed( <?php echo wc_get_price_decimals(); ?> ).replace( '.', '<?php echo $decimal_seperator; ?>' ) + '<?php echo $price_suffix; ?>' );
