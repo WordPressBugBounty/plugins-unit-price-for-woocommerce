@@ -2,9 +2,9 @@
 Contributors: condless
 Tags: unit, kg, decimal, vegetables
 Requires at least: 5.2
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,9 @@ A tool which notify about exceeding prices is available.
 The plugin is not compatible with the new product editor, and the new product block.
 
 == Changelog ==
+
+= 1.2.3 - May 8, 2025 =
+* Enhancement - WordPress version compatibility
 
 = 1.2.2 - November 12, 2024 =
 * Enhancement - WordPress version compatibility

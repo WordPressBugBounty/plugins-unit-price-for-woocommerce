@@ -4,7 +4,7 @@
  * Plugin Name: Unit Price for WooCommerce
  * Plugin URI: https://en.condless.com/unit-price-for-woocommerce/
  * Description: WooCommerce plugin for configuring products which are sold by units but priced by weight.
- * Version: 1.2.2
+ * Version: 1.2.3
  * Author: Condless
  * Author URI: https://en.condless.com/
  * Developer: Condless
@@ -15,10 +15,10 @@
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Requires at least: 5.2
- * Tested up to: 6.7
+ * Tested up to: 6.8
  * Requires PHP: 7.0
  * WC requires at least: 3.4
- * WC tested up to: 9.4
+ * WC tested up to: 9.8
  */
 
 /**
@@ -1095,7 +1095,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 			} else {
 				$theme = wp_get_theme();
 				$has_qty_buttons = ! empty( array_intersect( [ 'OceanWP', 'Flatsome' ], [ $theme->name, $theme->parent_theme ] ) );
-				$base_selector = apply_filters( 'upw_quantity_base_selector', '$( this ).parent().parent()' );
+				$base_selector = apply_filters( 'upw_quantity_base_selector', '$( this ).parent().parent()' ); // Maybe use 'closest' instead of parent
 				$base_trigger = apply_filters( 'upw_quantity_base_trigger', $has_qty_buttons ? 'change' : 'click input' );
 				$on_trigger = apply_filters( 'upw_quantity_on_trigger', $has_qty_buttons ? 'change' : 'click' );
 			}
