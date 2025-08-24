@@ -4,7 +4,7 @@
  * Plugin Name: Unit Price for WooCommerce
  * Plugin URI: https://en.condless.com/unit-price-for-woocommerce/
  * Description: WooCommerce plugin for configuring products which are sold by units but priced by weight.
- * Version: 1.2.3
+ * Version: 1.2.4
  * Author: Condless
  * Author URI: https://en.condless.com/
  * Developer: Condless
@@ -18,7 +18,7 @@
  * Tested up to: 6.8
  * Requires PHP: 7.0
  * WC requires at least: 3.4
- * WC tested up to: 9.8
+ * WC tested up to: 10.1
  */
 
 /**
@@ -89,12 +89,13 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 		 * WC functions init
 		 */
 		public function init_functions() {
+			add_filter( 'woocommerce_quantity_input_step_admin', [ $this, 'wc_admin_quantity_step' ] );
+			if ( is_admin() ) {
+				add_filter( 'woocommerce_quantity_input_step', [ $this, 'wc_admin_quantity_step' ] );
+			}
 			if ( in_array( 'yes', [ get_option( 'wc_upw_product_quantity_step', 'yes' ), get_option( 'wc_upw_product_measurement', 'yes' ) ] ) ) {
 				remove_filter( 'woocommerce_stock_amount', 'intval' );
 				add_filter( 'woocommerce_stock_amount', 'floatval' );
-				if ( is_admin() ) {
-					add_filter( 'woocommerce_quantity_input_step', [ $this, 'wc_admin_quantity_step' ] );
-				}
 			}
 			if ( 'yes' === get_option( 'wc_upw_product_quantity_step', 'yes' ) ) {
 				add_filter( 'woocommerce_quantity_input_args', [ $this, 'wc_quantity_input_args' ], 999, 2 );
